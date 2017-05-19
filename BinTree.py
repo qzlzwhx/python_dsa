@@ -1,6 +1,7 @@
 # coding:utf8
 
 from stack.Stack import Stack
+from queue import Queue
 
 
 class BinNode(object):
@@ -102,3 +103,24 @@ class BinTree(object):
 			print parent.data
 			# 它这个时候按照中序的规则应该讲访问权交给右节点，对右节点继续重复执行上述策略
 			parent = parent.rChild
+
+	def layer_order_traversal(self, parent):
+		# 层次遍历
+		queue = Queue()
+		if not parent:
+			return
+		# 将parent推入队列中
+		queue.enqueue(parent)
+		while True:
+			# 出队列一个元素并访问
+			parent = queue.dequeue()
+			print parent.data
+			# 将左右孩子入队（根据队列的先进先出的原则，节点逐层的被入队）
+			if parent.lChild:
+				queue.enqueue(parent.lChild)
+			if parent.rChild:
+				queue.enqueue(parent.rChild)
+			if queue.empty():
+				break
+
+

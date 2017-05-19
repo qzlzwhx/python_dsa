@@ -39,7 +39,8 @@ tree.insertAsRC(D, J)
 print 'start...................'
 # tree.traversal1(root)
 # tree.traversal2(root)
-tree.mid_order_traversal2(root)
+# tree.mid_order_traversal2(root)
+tree.layer_order_traversal(root)
 #
 # import random
 # result = []
