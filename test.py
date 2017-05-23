@@ -40,13 +40,18 @@ print 'start...................'
 # tree.traversal1(root)
 # tree.traversal2(root)
 # tree.mid_order_traversal2(root)
-tree.layer_order_traversal(root)
+#tree.layer_order_traversal(root)
 #
-# import random
-# result = []
-# random.randint(100000000000000, 999999999999999)
-# while len(result) < 100:
-# 	num = random.randint(100000000000000, 999999999999999)
-# 	if num not in result:
-# 		result.append(num)
-# print result
+from diagraph import *
+
+diagraph = GraphMatrix()
+A = Vertex('A')
+B = Vertex('B')
+C = Vertex('C')
+D = Vertex('D')
+diagraph.insertVerTex(A)
+diagraph.insertVerTex(B)
+diagraph.insertVerTex(C)
+diagraph.insertVerTex(D)
+
+
