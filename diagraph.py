@@ -173,6 +173,36 @@ class GraphMatrix(object):
 			if v.status == vStatus.get('UNDISCOVERED'):
 				self.breadth_first_search(v)
 
+	def deep_first_search(self, v):
+		# 深度优先搜索
+		# 策略：深度优先搜索，从某个顶点V出发，从他所有的邻接节点中随机取一个如果是未访问就继续递归采用DFS搜索访问，直到所有的邻接节点
+		# 被发现或者访问完，就访问节点v。具体在递归过程中对邻接节点的处理是属于算法的细节。
+		# 这里引入的backward边，forward边，和cross边的意思是，backward表示从A->B的边B这个顶点已经提前被发现了。
+		# forward，刚好符合树的子节点的引用比如A->B的边，这个方向上B在tree中是A的子节点。
+		# cross表示2个顶点不存在父子继承关系，在图转化成树的过程中他们在树中无任何继承关系。是
+		for i in range(self.size):
+			if self.E[v][i]:
+				# 表示v和i有一个边
+				u = self.vertex[i]
+				# 对u的状态进行判断
+				if u.status == vStatus.get('UNDISCOVERED'):
+					self.deep_first_search(i)
+					# 标记支撑树的边
+					self.E[v][i].status = ESTATUS.get("TREE")
+					# 标记父子关系
+					self.vertex[i].parent = self.vertex[v]
+				elif u.status == vStatus.get('DISCOVERED'):
+					# 已经被发现但是未访问应该属于被后代指向的祖先,即向后边
+					self.E[v][i].status = ESTATUS.get("BACKWARD")
+
+				else:
+					# 已经访问完毕，则视为前向边或跨边,
+					self.E[v][i].status = ESTATUS.get("FORWARD") if self.vertex[v].dTime < self.vertex[i].dTime \
+						else ESTATUS.get('CROSS')
+		# 所有的邻接节点访问完后，标记v为visited
+		self.vertex[v].status = vStatus.get('VISITED')
+
+
 
 class UnDiagraph(Diagraph):
 	# 无向图
