@@ -10,6 +10,7 @@ class BinNode(object):
 		self.data = data
 		self.lChild = None
 		self.rChild = None
+		# 单节点是0，空是-1
 		self.height = 0
 	#
 	# def insert_as_LC(self, lChild):
