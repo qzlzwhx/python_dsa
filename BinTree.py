@@ -10,28 +10,49 @@ class BinNode(object):
 		self.data = data
 		self.lChild = None
 		self.rChild = None
-
-	def insert_as_LC(self, lChild):
-		self.lChild = lChild
-		lChild.parent = self
-
-	def insert_as_RC(self, rChild):
-		self.rChild = rChild
-		rChild.parent = self
+		self.height = 0
+	#
+	# def insert_as_LC(self, lChild):
+	# 	self.lChild = lChild
+	# 	lChild.parent = self
+	#
+	# def insert_as_RC(self, rChild):
+	# 	self.rChild = rChild
+	# 	rChild.parent = self
 
 
 class BinTree(object):
 
 	def __init__(self, root):
 		self.root = root
+		self.size = 0
+		self.pre_order_sequnece = []
 
 	def insertASLC(self, parent, lChild):
 		parent.lChild = lChild
 		lChild.parent = parent
+		self.update_above_height(lChild)
+		self.size += 1
 
 	def insertAsRC(self, parent, rChild):
 		parent.rChild = rChild
 		rChild.parent = parent
+		self.update_above_height(rChild)
+		self.size += 1
+
+	def update_height(self, node):
+		lChild_height = node.lChild.height if node.lChild else -1
+		rChild_height = node.rChild.height if node.rChild else -1
+		node.height = 1 + max(lChild_height, rChild_height)
+
+	def update_above_height(self, node):
+		self.update_height(node)
+		# 更新node上边的节点
+		parent = node.parent
+		while parent:
+			# 优化空间如果树的高度未变化就跳出循环
+			self.update_height(parent)
+			parent = parent.parent
 
 	def pre_order_traversal1(self, parent):
 		# 递归遍历先序遍历即：parent, lchild, rchild的顺序
